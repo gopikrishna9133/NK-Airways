@@ -1,0 +1,30 @@
+# OS junk
+.DS_Store
+Thumbs.db
+
+# IDE junk
+.vscode/
+.idea/
+*.swp
+
+# Node modules (in any child folder)
+node_modules/
+
+# Environment variables (global safety)
+.env
+.env.*
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.cache
+*.tmp
+*.temp
+*.bak
+
+# Keep DB schema files
+database/*.sql
+!database/schema.sql
+!database/reports.sql
