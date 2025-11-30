@@ -129,10 +129,10 @@ JWT_SECRET=supersecretkey
 CREATE DATABASE nk_airways;
 ```
 
-### Import Schema
-```sql
-SOURCE schema.sql;
-```
+### Run Schema in MySQL Workbench
+
+run schema.sql file in MySQL Workbench;
+
 
 ## 📡 API Endpoints Summary
 
