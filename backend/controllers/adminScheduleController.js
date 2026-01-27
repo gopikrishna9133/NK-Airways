@@ -100,7 +100,6 @@ const updateSchedule = async (req, res) => {
       return res.status(400).json({ message: 'flight_id, route_id, departure_datetime and arrival_datetime are required' });
     }
 
-    // Normalize datetimes
     let dep, arr;
     try {
       dep = toMySQLDateTime(departure_datetime);

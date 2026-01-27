@@ -3,7 +3,7 @@ const router = express.Router();
 const scheduleController = require('../controllers/scheduleController');
 const { authenticate, requireAdmin } = require('../middleware/authMiddleware');
 
-router.post('/', authenticate, requireAdmin, scheduleController.createSchedule); // admin only
+router.post('/', authenticate, requireAdmin, scheduleController.createSchedule);
 router.get('/', scheduleController.getAllSchedules);
 router.get('/:id', scheduleController.getScheduleById);
 router.put('/:id', authenticate, requireAdmin, scheduleController.updateSchedule);

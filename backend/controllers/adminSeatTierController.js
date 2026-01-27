@@ -1,6 +1,5 @@
 const pool = require('../config/db');
 
-// List all tiers
 async function listTiers(req, res) {
   try {
     const [rows] = await pool.query('SELECT tier_id, seat_class, seat_type, created_at FROM seattier ORDER BY tier_id ASC');
@@ -11,7 +10,6 @@ async function listTiers(req, res) {
   }
 }
 
-// Get single tier
 async function getTier(req, res) {
   try {
     const id = req.params.id;
@@ -24,7 +22,6 @@ async function getTier(req, res) {
   }
 }
 
-// Create tier
 async function createTier(req, res) {
   try {
     const { seat_class, seat_type } = req.body;
@@ -39,7 +36,6 @@ async function createTier(req, res) {
   }
 }
 
-// Update tier
 async function updateTier(req, res) {
   try {
     const id = req.params.id;
@@ -55,7 +51,6 @@ async function updateTier(req, res) {
   }
 }
 
-// Delete tier
 async function deleteTier(req, res) {
   try {
     const id = req.params.id;

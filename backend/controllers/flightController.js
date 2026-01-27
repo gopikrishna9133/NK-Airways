@@ -6,7 +6,6 @@ async function getAdminIdForUser(user_id) {
   return rows.length ? rows[0].admin_id : null;
 }
 
-// Create flight
 async function createFlight(req, res) {
   try {
     const { flight_no, flight_name, aircraft_type } = req.body;
@@ -23,7 +22,6 @@ async function createFlight(req, res) {
     );
     const flightId = result.insertId;
 
-    // attempt to generate seat templates
     if (seat_count > 0) {
       try {
         await generateSeatTemplates(flightId, seat_count, { force: false });
@@ -40,7 +38,6 @@ async function createFlight(req, res) {
   }
 }
 
-// Generate seat templates for a flight
 async function generateSeatTemplates(flightId, seatCount, options = {}) {
   const force = !!options.force;
 
@@ -57,7 +54,6 @@ async function generateSeatTemplates(flightId, seatCount, options = {}) {
     }
   }
 
-  // Load seat tiers
   const [tierRows] = await pool.query('SELECT * FROM seattier ORDER BY tier_id ASC');
 
   let businessTier = tierRows.find(r => r.seat_class && r.seat_class.toString().toLowerCase().includes('business'));
@@ -82,12 +78,10 @@ async function generateSeatTemplates(flightId, seatCount, options = {}) {
   const busTierId = businessTier.tier_id ?? businessTier.id;
   const econTierId = economyTier.tier_id ?? economyTier.id;
 
-  // Layout: 6 seats per row A-F
   const seatLetters = ['A','B','C','D','E','F'];
   const perRow = seatLetters.length;
   const rowsCount = Math.ceil(seatCount / perRow);
 
-  // Business seats: 20% (rounded)
   const businessCount = Math.round(seatCount * 0.2);
   let businessAssigned = 0;
 
@@ -104,7 +98,6 @@ async function generateSeatTemplates(flightId, seatCount, options = {}) {
       const is_window = (letter === 'A' || letter === 'F') ? 1 : 0;
       const is_aisle = (letter === 'C' || letter === 'D') ? 1 : 0;
 
-      // Assign business first (front rows)
       let tier_id = econTierId;
       if (businessAssigned < businessCount) {
         tier_id = busTierId;
@@ -119,7 +112,6 @@ async function generateSeatTemplates(flightId, seatCount, options = {}) {
     throw new Error('No seats generated - check seatCount');
   }
 
-  // Bulk insert
   const placeholders = seatsToInsert.map(() => '(?, ?, ?, ?, ?, ?, ?)').join(', ');
   const flat = seatsToInsert.flat();
   const sql = `INSERT INTO seat (flight_id, tier_id, seat_number, row_no, is_window, is_aisle, created_at) VALUES ${placeholders}`;
@@ -128,7 +120,6 @@ async function generateSeatTemplates(flightId, seatCount, options = {}) {
   return { inserted: result.affectedRows, createdSeatIds: result.insertId };
 }
 
-/* Basic flight CRUD operations */
 
 async function getAllFlights(req, res) {
   try {

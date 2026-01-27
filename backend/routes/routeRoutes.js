@@ -3,7 +3,7 @@ const router = express.Router();
 const routeController = require('../controllers/routeController');
 const { authenticate, requireAdmin } = require('../middleware/authMiddleware');
 
-router.post('/', authenticate, requireAdmin, routeController.createRoute); // admin only
+router.post('/', authenticate, requireAdmin, routeController.createRoute);
 router.get('/', routeController.getAllRoutes);
 router.get('/:id', routeController.getRouteById);
 router.put('/:id', authenticate, requireAdmin, routeController.updateRoute);

@@ -40,7 +40,7 @@ export default function RouteForm({ initial = null, onDone, onCancel }: Props) {
       const payload: any = { origin_location: origin, destination_location: destination };
       if (distance !== null && distance !== "") {
         const n = Number(distance);
-        if (!Number.isNaN(n)) payload.distance = n; // miles
+        if (!Number.isNaN(n)) payload.distance = n;
       }
       if (initial && initial.route_id) {
         await updateMut.mutateAsync(payload);

@@ -22,8 +22,7 @@ export default function FlightsList() {
 
   const [editing, setEditing] = useState<any | null>(null);
   const [showCreate, setShowCreate] = useState(false);
-
-  // --- filter / sort 
+ 
   const [qText, setQText] = useState("");
   const [aircraftFilter, setAircraftFilter] = useState("");
   const [sortBy, setSortBy] = useState<"flight_no" | "seats">("flight_no");
@@ -76,7 +75,6 @@ export default function FlightsList() {
         </div>
       </div>
 
-      {/* Filters */}
       <div style={{ display: "flex", gap: 8, marginBottom: 10, alignItems: "center" }}>
         <input className="input" placeholder="Search flight no or name" value={qText} onChange={(e) => setQText(e.target.value)} />
 

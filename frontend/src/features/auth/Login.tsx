@@ -30,7 +30,6 @@ export default function Login() {
           const me = await api.get("/auth/me");
           user = me.data?.user ?? me.data ?? null;
         } catch {
-          // ignore
         }
       }
 

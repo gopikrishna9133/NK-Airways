@@ -22,8 +22,7 @@ export default function TiersList() {
 
   const [editing, setEditing] = useState<any | null>(null);
   const [showCreate, setShowCreate] = useState(false);
-
-  // filter / sort 
+ 
   const [qText, setQText] = useState("");
   const [filterClass, setFilterClass] = useState("");
   const [sortBy, setSortBy] = useState<"seat_class" | "seat_type">("seat_class");

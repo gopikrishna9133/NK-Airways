@@ -31,7 +31,6 @@ export default function PricesList() {
   const [editing, setEditing] = useState<any | null>(null);
   const [showCreate, setShowCreate] = useState(false);
 
-  // filter / sort state (asc/desc removed)
   const [qText, setQText] = useState("");
   const [filterTier, setFilterTier] = useState<string | "">("");
   const [minPrice, setMinPrice] = useState<string>("");
@@ -64,7 +63,7 @@ export default function PricesList() {
         const B = String(tierMap[String(b.tier_id)]?.seat_class ?? "");
         return A.localeCompare(B);
       }
-      return Number(a.price) - Number(b.price); // ascending
+      return Number(a.price) - Number(b.price);
     };
 
     out.sort(cmp);
@@ -87,7 +86,6 @@ export default function PricesList() {
         <div><button className="btn-primary" onClick={() => { setEditing(null); setShowCreate(true); }}>Create price</button></div>
       </div>
 
-      {/* Filter UI */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 260px 220px", gap: 8, marginBottom: 10 }}>
         <input className="input" placeholder="Search price or tier" value={qText} onChange={(e) => setQText(e.target.value)} />
 

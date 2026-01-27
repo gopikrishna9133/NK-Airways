@@ -1,13 +1,11 @@
 const pool = require('../config/db');
 
-// Create price
 async function createPrice(req, res) {
   try {
     const { tier_id, price } = req.body;
     if (!tier_id) return res.status(400).json({ message: 'tier_id is required' });
     if (price === undefined || price === null || isNaN(Number(price))) return res.status(400).json({ message: 'price must be a number' });
 
-    // validate tier exists
     const [tier] = await pool.query('SELECT tier_id FROM seattier WHERE tier_id = ? LIMIT 1', [tier_id]);
     if (!tier.length) return res.status(400).json({ message: 'Invalid tier_id' });
 
@@ -55,7 +53,6 @@ async function updatePrice(req, res) {
     if (!tier_id) return res.status(400).json({ message: 'tier_id is required' });
     if (price === undefined || price === null || isNaN(Number(price))) return res.status(400).json({ message: 'price must be a number' });
 
-    // validate tier exists
     const [tier] = await pool.query('SELECT tier_id FROM seattier WHERE tier_id = ? LIMIT 1', [tier_id]);
     if (!tier.length) return res.status(400).json({ message: 'Invalid tier_id' });
 

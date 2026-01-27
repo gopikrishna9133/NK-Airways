@@ -1,7 +1,5 @@
 const pool = require('../config/db');
 
-// List bookings (recent)
-
 async function listBookings(req, res) {
   try {
     const [rows] = await pool.query(
@@ -27,7 +25,6 @@ async function listBookings(req, res) {
   }
 }
 
-// Revenue by schedule
 async function revenueBySchedule(req, res) {
   try {
     const [rows] = await pool.query(
@@ -50,7 +47,6 @@ async function revenueBySchedule(req, res) {
   }
 }
 
-// Manifest by schedule
 async function manifestBySchedule(req, res) {
   try {
     const scheduleId = req.params.scheduleId;
@@ -82,7 +78,6 @@ async function manifestBySchedule(req, res) {
       return res.json({ schedule: srows[0], passengers: rows });
     }
 
-    // Build CSV
     const header = ['Booking ID','PNR','Status','Seat','Name','Email','Phone','DOB','Amount','Booking Date'];
     const csvRows = rows.map(r => ([
       r.booking_id ?? '',

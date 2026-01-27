@@ -9,14 +9,11 @@ const register = async (req, res) => {
       return res.status(400).json({ message: 'name, email and password are required' });
     }
 
-    // check exists
     const [existing] = await pool.query('SELECT user_id FROM `user` WHERE email = ?', [email]);
     if (existing.length) return res.status(400).json({ message: 'Email already used' });
 
-    // hash
     const hash = await bcrypt.hash(password, 10);
 
-    // insert user
     const [result] = await pool.query(
       'INSERT INTO `user` (name, email, password_hash, role) VALUES (?, ?, ?, ?)',
       [name, email, hash, role || 'Passenger']
@@ -24,7 +21,6 @@ const register = async (req, res) => {
 
     const userId = result.insertId;
 
-    // create passenger/admin profile
     const lowerRole = (role || 'Passenger').toLowerCase();
     if (lowerRole === 'passenger') {
       await pool.query('INSERT INTO passenger (user_id) VALUES (?)', [userId]).catch(()=>{});

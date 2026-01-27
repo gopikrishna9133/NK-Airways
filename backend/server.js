@@ -4,11 +4,9 @@ const app = express();
 require("dotenv").config();
 const path = require("path");
 
-// Middlewares
 app.use(cors());
 app.use(express.json());
 
-// Routes imports
 const authRoutes = require("./routes/authRoutes");
 const flightRoutes = require("./routes/flightRoutes");
 const routeRoutes = require("./routes/routeRoutes");
@@ -21,7 +19,6 @@ const priceRoutes = require("./routes/priceRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const profileController = require("./controllers/profileController");
 
-// Mount admin routes
 app.use("/api/auth", authRoutes);
 app.use("/api/flights", flightRoutes);
 app.use("/api/routes", routeRoutes);
@@ -51,11 +48,9 @@ app.post(
   profileController.changePassword
 );
 
-// Root route
 app.get("/", (req, res) => {
   res.send("NK Airlines Backend Running");
 });
 
-// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

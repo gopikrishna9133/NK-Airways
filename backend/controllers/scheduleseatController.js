@@ -6,18 +6,15 @@ async function generateScheduleSeats(req, res) {
     const scheduleId = parseInt(req.params.scheduleId, 10);
     if (!scheduleId) return res.status(400).json({ message: 'scheduleId required' });
 
-    // Get schedule -> flight_id
     const [srows] = await pool.query('SELECT flight_id FROM `schedule` WHERE schedule_id = ? LIMIT 1', [scheduleId]);
     if (!srows.length) return res.status(404).json({ message: 'Schedule not found' });
     const flightId = srows[0].flight_id;
 
-    // fetch seats for that flight
     const [seats] = await pool.query('SELECT seat_id, tier_id FROM `seat` WHERE flight_id = ? ORDER BY row_no, seat_number', [flightId]);
     if (!seats.length) {
       return res.status(400).json({ message: 'No seats defined for this flight' });
     }
 
-    // fetch existing schedule_seat seat_ids
     const [existing] = await pool.query('SELECT seat_id FROM `schedule_seat` WHERE schedule_id = ?', [scheduleId]);
     const existingSet = new Set((existing || []).map(r => Number(r.seat_id)));
 
@@ -27,7 +24,6 @@ async function generateScheduleSeats(req, res) {
       return res.status(400).json({ message: 'No seat templates found for flight' });
     }
 
-    // Prepare batch insert for new rows
     const toInsert = [];
     for (const seat of seats) {
       if (!existingSet.has(Number(seat.seat_id))) {

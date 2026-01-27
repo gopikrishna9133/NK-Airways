@@ -23,7 +23,6 @@ export default function RoutesList() {
   const [editing, setEditing] = useState<any | null>(null);
   const [showCreate, setShowCreate] = useState(false);
 
-  // --- filter/sort state (note: min/max distance and asc/desc removed)
   const [qText, setQText] = useState("");
   const [filterOrigin, setFilterOrigin] = useState("");
   const [filterDestination, setFilterDestination] = useState("");
@@ -56,7 +55,7 @@ export default function RoutesList() {
       if (sortBy === "distance") {
         const A = Number.isFinite(Number(a.distance)) ? Number(a.distance) : Number.POSITIVE_INFINITY;
         const B = Number.isFinite(Number(b.distance)) ? Number(b.distance) : Number.POSITIVE_INFINITY;
-        return A - B; // fixed ascending order
+        return A - B;
       }
       if (sortBy === "origin") {
         return String(a.origin_location ?? "").localeCompare(String(b.origin_location ?? ""));
@@ -64,7 +63,7 @@ export default function RoutesList() {
       return String(a.destination_location ?? "").localeCompare(String(b.destination_location ?? ""));
     };
 
-    res.sort(cmp); // always ascending
+    res.sort(cmp);
     return res;
   }, [data, qText, filterOrigin, filterDestination, sortBy]);
 
@@ -86,7 +85,6 @@ export default function RoutesList() {
         </div>
       </div>
 
-      {/* Filter / Sort UI */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 200px 200px", gap: 8, marginBottom: 10, alignItems: "center" }}>
         <input placeholder="Search origin / destination" className="input" value={qText} onChange={(e) => setQText(e.target.value)} />
 

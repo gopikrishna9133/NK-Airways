@@ -7,11 +7,9 @@ const createSeat = async (req, res) => {
       return res.status(400).json({ message: 'flight_id, tier_id and seat_number are required' });
     }
 
-    // ensure flight exists
     const [f] = await pool.query('SELECT flight_id FROM `flight` WHERE flight_id = ? LIMIT 1', [flight_id]);
     if (!f.length) return res.status(400).json({ message: 'Invalid flight_id' });
 
-    // ensure tier exists
     const [t] = await pool.query('SELECT tier_id FROM `seattier` WHERE tier_id = ? LIMIT 1', [tier_id]);
     if (!t.length) return res.status(400).json({ message: 'Invalid tier_id' });
 
@@ -55,7 +53,6 @@ const updateSeat = async (req, res) => {
     const { tier_id, seat_number, is_window, is_aisle, row_no } = req.body;
     if (!tier_id || !seat_number) return res.status(400).json({ message: 'tier_id and seat_number are required' });
 
-    // ensure tier exists
     const [t] = await pool.query('SELECT tier_id FROM `seattier` WHERE tier_id = ? LIMIT 1', [tier_id]);
     if (!t.length) return res.status(400).json({ message: 'Invalid tier_id' });
 

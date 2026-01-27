@@ -191,7 +191,7 @@ export default function ScheduleDetail() {
             if (lu && (lu.passenger_id || lu.user_id || lu.id)) passengerId = lu.passenger_id ?? lu.user_id ?? lu.id;
           }
         }
-      } catch (e) { /* ignore */ }
+      } catch (e) { }
 
       if (passengerId) payload.passenger_id = passengerId;
       else payload.passenger = { name: passenger.name, phone: passenger.phone, dob: passenger.dob || null, passport: passenger.passport || null, email: passenger.email };

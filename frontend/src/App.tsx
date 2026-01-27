@@ -48,7 +48,6 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/search" replace />} />
 
-          {/* Passenger Routes */}
           <Route path="/search" element={<PageWrapper><Search /></PageWrapper>} />
           <Route path="/search/results" element={<PageWrapper><SearchResults /></PageWrapper>} />
           <Route path="/schedule/:id" element={<PageWrapper><ScheduleDetail /></PageWrapper>} />
@@ -56,12 +55,10 @@ export default function App() {
           <Route path="/bookings" element={<ProtectedRoute><PageWrapper><BookingsList /></PageWrapper></ProtectedRoute>} />
           <Route path="/bookings/:id" element={<ProtectedRoute><PageWrapper><BookingView /></PageWrapper></ProtectedRoute>} />
 
-          {/* Auth */}
           <Route path="/auth/login" element={<PageWrapper><Login /></PageWrapper>} />
           <Route path="/auth/register" element={<PageWrapper><Register /></PageWrapper>} />
           <Route path="/profile" element={<PageWrapper><Profile /></PageWrapper>} />
 
-          {/* Admin */}
           <Route path="/admin" element={<ProtectedRoute requireAdmin><PageWrapper><AdminShell /></PageWrapper></ProtectedRoute>} />
           <Route path="/admin/flights" element={<ProtectedRoute requireAdmin><PageWrapper><FlightsList /></PageWrapper></ProtectedRoute>} />
           <Route path="/admin/routes" element={<ProtectedRoute requireAdmin><PageWrapper><RoutesList /></PageWrapper></ProtectedRoute>} />

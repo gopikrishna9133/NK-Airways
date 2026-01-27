@@ -1,6 +1,5 @@
 const pool = require('../config/db');
 
-//list prices
 async function listPrices(req, res) {
   try {
     const [rows] = await pool.query(`
@@ -16,7 +15,6 @@ async function listPrices(req, res) {
   }
 }
 
-// Get prices
 async function getPrice(req, res) {
   try {
     const id = req.params.id;
@@ -29,7 +27,6 @@ async function getPrice(req, res) {
   }
 }
 
-// Create Price
 async function createPrice(req, res) {
   try {
     const { tier_id, price } = req.body;

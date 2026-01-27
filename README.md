@@ -92,6 +92,7 @@ nk-airways/
 ### Step 1 — Create `package.json` in root (if not present)
 ```bash
 cd nk-airways
+npm install
 npm init -y
 ```
 
@@ -117,12 +118,18 @@ Create `backend/.env`:
 ```
 PORT=5000
 DB_HOST=localhost
-DB_USER=root
-DB_PASS=yourpassword
+DB_PORT=3306
+DB_USER=nkuser
+DB_PASS=Nk1234
 DB_NAME=nk_airways
+NODE_ENV=development
 JWT_SECRET=supersecretkey
 ```
-
+## JWT_SECRET KEY
+To get secret key run this in cmd or powershell or node
+```bash
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+```
 ## 🛢 Database Setup
 ### Create Database
 ```sql
@@ -131,7 +138,10 @@ CREATE DATABASE nk_airways;
 
 ### Run Schema in MySQL Workbench
 
-run schema.sql file in MySQL Workbench;
+use MySQL Workbench -
+run schema.sql file in MySQL Workbench to create required tables,
+run seed.sql file in MySQL Workbench to insert sample data. 
+run report.sql file in MySQL Workbench to get reports of project.
 
 
 ## 📡 API Endpoints Summary
