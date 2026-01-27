@@ -43,6 +43,20 @@ export default function Navbar() {
       return () => clearTimeout(t);
     } catch {}
   }, []);
+  useEffect(() => {
+    function handleStorageChange(e: StorageEvent) {
+      if (e.key === "nk_token" && e.newValue === null) {
+        window.location.href = "/auth/login";
+      }
+    }
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
 
   const pricingPaths = ["/admin/tiers", "/admin/prices", "/admin/reports"];
 
