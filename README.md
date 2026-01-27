@@ -4,8 +4,6 @@
 NK Airways is a full-stack airline reservation system built to demonstrate real-world booking workflows, role-based access control, and relational database design.  
 The system supports both **Passengers** and **Administrators**, covering the complete lifecycle from flight creation to booking confirmation.
 
-This project is designed as a **portfolio-grade, production-style application**, not a demo toy app.
-
 ---
 
 ## 🌐 Live Deployment
