@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 function readUser() {
   try {
@@ -11,6 +11,7 @@ function readUser() {
 
 export default function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const path = location.pathname;
   const user = readUser();
 
@@ -27,7 +28,8 @@ export default function Navbar() {
     localStorage.removeItem("user");
     localStorage.removeItem("nk_login_at");
     localStorage.removeItem("nk_expires_at");
-    window.location.href = "/auth/login";
+    navigate("/auth/login", { replace: true });
+
   };
 
   useEffect(() => {
@@ -46,7 +48,8 @@ export default function Navbar() {
   useEffect(() => {
     function handleStorageChange(e: StorageEvent) {
       if (e.key === "nk_token" && e.newValue === null) {
-        window.location.href = "/auth/login";
+        navigate("/auth/login", { replace: true });
+
       }
     }
 
