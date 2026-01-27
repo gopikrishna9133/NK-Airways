@@ -44,11 +44,6 @@ export default function Navbar() {
     } catch {}
   }, []);
 
-  function handleLogoClick(e: React.MouseEvent) {
-    e.preventDefault();
-    window.location.reload();
-  }
-
   const pricingPaths = ["/admin/tiers", "/admin/prices", "/admin/reports"];
 
   function showPricingSubtabs() {
@@ -67,9 +62,8 @@ export default function Navbar() {
     <header style={headerStyle}>
       <div className="app-container" style={containerStyle}>
         <div style={leftStyle}>
-          <a
-            href={path}
-            onClick={handleLogoClick}
+          <NavLink
+            to={location.pathname}
             style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none", color: "inherit", cursor: "pointer" }}
           >
             <div style={{
@@ -85,7 +79,7 @@ export default function Navbar() {
               <i className="fa-solid fa-plane-departure" />
             </div>
             <div style={{ fontWeight: 900, fontSize: 18, color: "#07132a" }}>NK Airlines</div>
-          </a>
+          </NavLink>
 
           {isAdmin ? (
             <>
