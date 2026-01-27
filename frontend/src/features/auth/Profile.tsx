@@ -34,7 +34,6 @@ export default function Profile() {
   if (!user) return null;
 
   const isAdmin = (user.role || "").toLowerCase() === "admin";
-  const isPassenger = (user.role || "").toLowerCase() === "passenger";
 
   const cardStyle: React.CSSProperties = { maxWidth: 760, margin: "8px auto", padding: 12 };
   const panelStyle: React.CSSProperties = { marginTop: 10, border: "1px solid rgba(0,0,0,0.06)", borderRadius: 8, padding: 12, background: "#fff" };

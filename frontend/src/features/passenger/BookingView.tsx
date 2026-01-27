@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api/client";
 
@@ -45,7 +45,6 @@ export default function BookingView() {
   const navigate = useNavigate();
 
   const [booking, setBooking] = useState<any>(null);
-  const [rawResp, setRawResp] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -53,11 +52,10 @@ export default function BookingView() {
     setLoading(true);
     api.get(`/bookings/${bookingId}`)
       .then(r => {
-        setRawResp(r.data);
         const data = r.data?.booking ?? r.data ?? null;
         setBooking(data);
       })
-      .catch(e => { console.error(e); setBooking(null); setRawResp({ error: String(e) }); })
+      .catch(e => { console.error(e); setBooking(null); })
       .finally(() => setLoading(false));
   }, [bookingId]);
 

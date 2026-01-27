@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import api from "../../api/client";
 
@@ -38,29 +38,6 @@ function formatLocalNice(value: any): string {
   });
 }
 
-function parseCsvToRows(csvText: string): Record<string, any>[] {
-  const lines = csvText.split(/\r?\n/).filter(l => l.trim() !== "");
-  if (!lines.length) return [];
-  const headerLine = lines.shift()!;
-  const headerRegex = /("([^"]|"")*"|[^,]+)/g;
-  const headers: string[] = (headerLine.match(headerRegex) || []).map(h => {
-    let v = h;
-    if (v.startsWith('"') && v.endsWith('"')) v = v.slice(1, -1).replace(/""/g, '"');
-    return v;
-  });
-  const rows = lines.map(line => {
-    const matches = line.match(headerRegex) || [];
-    const cells = matches.map((c: string) => {
-      let v = c;
-      if (v.startsWith('"') && v.endsWith('"')) v = v.slice(1, -1).replace(/""/g, '"');
-      return v;
-    });
-    const obj: any = {};
-    for (let i = 0; i < headers.length; i++) obj[headers[i] ?? `col${i}`] = cells[i] ?? "";
-    return obj;
-  });
-  return rows;
-}
 
 export default function Reports() {
   const [revenueRows, setRevenueRows] = useState<any[] | null>(null);
@@ -69,7 +46,7 @@ export default function Reports() {
 
   const [viewScheduleId, setViewScheduleId] = useState<number | null>(null);
   const [viewOpen, setViewOpen] = useState(false);
-  const [viewLoading, setViewLoading] = useState(false);
+  const [viewLoading] = useState(false);
   const [viewRows, setViewRows] = useState<any[] | null>(null);
   const [viewError, setViewError] = useState<string | null>(null);
 
@@ -125,7 +102,7 @@ export default function Reports() {
       .join("");
     const metaParts = [];
     if (scheduleFilter) {
-      const s = schedules.find(sch => Number(sch.schedule_id ?? sch.id) === Number(scheduleFilter));
+      const s = schedules.find((sch: any) => Number(sch.schedule_id ?? sch.id) === Number(scheduleFilter));
       if (s) metaParts.push(`Schedule: ${s.schedule_id ?? s.id}`);
     }
     if (qFilter) metaParts.push(`Filter: ${qFilter}`);
@@ -168,31 +145,6 @@ export default function Reports() {
     win.document.close();
   }
 
-  async function openView(scheduleId: number) {
-    setViewScheduleId(scheduleId);
-    setViewOpen(true);
-    setViewLoading(true);
-    setViewRows(null);
-    setViewError(null);
-    try {
-      const res = await api.get(`/admin/reports/manifest/${scheduleId}`, { responseType: "blob" });
-      const contentType = (res.headers?.["content-type"] ?? "").toLowerCase();
-      const blob = new Blob([res.data], { type: contentType || "application/json" });
-      if (contentType.includes("application/json")) {
-        const text = await blob.text();
-        const parsed = JSON.parse(text);
-        setViewRows(Array.isArray(parsed) ? parsed : []);
-      } else {
-        const text = await blob.text();
-        const rows = parseCsvToRows(text);
-        setViewRows(rows);
-      }
-    } catch (err: any) {
-      setViewError(err?.response?.data?.message ?? err?.message ?? "Failed to load booking details");
-    } finally {
-      setViewLoading(false);
-    }
-  }
 
   function closeView() {
     setViewOpen(false);

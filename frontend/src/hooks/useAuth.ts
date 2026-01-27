@@ -13,16 +13,26 @@ type AuthState = {
 
 export const useAuth = create<AuthState>((set) => ({
   token: typeof window !== "undefined" ? localStorage.getItem("nk_token") : null,
-  user: null,
+  user: typeof window !== "undefined"
+    ? JSON.parse(localStorage.getItem("user") || "null")
+    : null,
+
   setToken: (t) => {
     if (t) localStorage.setItem("nk_token", t);
     else localStorage.removeItem("nk_token");
     set({ token: t });
   },
-  setUser: (u) => set({ user: u }),
+
+  setUser: (u) => {
+    if (u) localStorage.setItem("user", JSON.stringify(u));
+    else localStorage.removeItem("user");
+    set({ user: u });
+  },
+
   logout: () => {
     localStorage.removeItem("nk_token");
+    localStorage.removeItem("user");
     set({ token: null, user: null });
-    window.location.href = "/login";
+    window.location.href = "/auth/login";
   },
 }));

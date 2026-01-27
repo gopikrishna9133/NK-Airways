@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
 function readUser() {
   try {
@@ -11,7 +11,6 @@ function readUser() {
 
 export default function Navbar() {
   const location = useLocation();
-  const navigate = useNavigate();
   const path = location.pathname;
   const user = readUser();
 
@@ -51,17 +50,13 @@ export default function Navbar() {
   }
 
   const pricingPaths = ["/admin/tiers", "/admin/prices", "/admin/reports"];
-  const managePaths = ["/admin/flights", "/admin/routes", "/admin/schedules", "/admin"];
 
   function showPricingSubtabs() {
     return pricingPaths.some(p => path === p || path.startsWith(p + "/") || path.startsWith(p));
   }
-  function showManageSubtabs() {
-    return managePaths.some(p => path === p || path.startsWith(p + "/") || (p === "/admin" && path === "/admin"));
-  }
 
   const showPricing = isAdmin && !isProfilePage && showPricingSubtabs();
-  const showManage = isAdmin && !isProfilePage && !showPricing; // fallback to manage when admin and not pricing
+  const showManage = isAdmin && !isProfilePage && !showPricing;
 
   const headerStyle: React.CSSProperties = { background: "#fff", borderBottom: "1px solid rgba(0,0,0,0.06)", position: "sticky", top: 0, zIndex: 60 };
   const containerStyle: React.CSSProperties = { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 0" };

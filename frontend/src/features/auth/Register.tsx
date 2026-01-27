@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../api/client";
@@ -6,7 +5,7 @@ import api from "../../api/client";
 type Form = { name: string; email: string; password: string; confirm: string; role?: string };
 
 export default function Register() {
-  const { register, handleSubmit, watch } = useForm<Form>({ defaultValues: { role: "Passenger" }});
+  const { register, handleSubmit } = useForm<Form>({ defaultValues: { role: "Passenger" }});
   const navigate = useNavigate();
 
   async function onSubmit(values: Form) {

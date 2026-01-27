@@ -1,13 +1,7 @@
-import React from "react";
 import { useLocation, Link } from "react-router-dom";
 
 function useQuery() {
   return Object.fromEntries(new URLSearchParams(useLocation().search));
-}
-
-function extractPnr(obj: any) {
-  if (!obj) return null;
-  return obj.pnr ?? obj.PNR ?? obj.reference ?? obj.ref ?? null;
 }
 
 export default function BookingConfirmation() {

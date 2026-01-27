@@ -1,30 +1,14 @@
-import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import api from "../../api/client";
-import * as authMod from "../../hooks/useAuth";
+import {useAuth} from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
 
-function getUser() {
-  try {
-    if (typeof authMod === "function") {
-      const ctx = (authMod as any)();
-      return ctx?.user ?? ctx;
-    }
-    if ((authMod as any).useAuth) {
-      const ctx = (authMod as any).useAuth();
-      return ctx?.user ?? ctx;
-    }
-    return (authMod as any).user ?? JSON.parse(localStorage.getItem("user") || "null");
-  } catch {
-    return JSON.parse(localStorage.getItem("user") || "null");
-  }
-}
 
 export default function BookingList() {
-  const user = getUser();
+  const user = useAuth((state) => state.user);
 
   const q = useQuery({
-    queryKey: ["bookings", user?.passenger_id ?? user?.user_id ?? "me"],
+    queryKey: ["bookings", user?.user_id ?? "me"],
     queryFn: async () => {
       const res = await api.get("/bookings");
       return Array.isArray(res.data) ? res.data : res.data?.bookings ?? res.data?.results ?? [];
