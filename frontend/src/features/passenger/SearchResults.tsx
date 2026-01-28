@@ -73,10 +73,6 @@ export default function SearchResults() {
     return (
       <div>
         <div>No flights found.</div>
-        <details style={{ marginTop: 12 }}>
-          <summary>Raw response (debug)</summary>
-          <pre style={{ maxHeight: 300, overflow: "auto", background: "#fff", padding: 8 }}>{JSON.stringify(rawResp, null, 2)}</pre>
-        </details>
       </div>
     );
   }
