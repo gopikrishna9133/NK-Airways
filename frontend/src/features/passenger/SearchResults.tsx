@@ -40,7 +40,7 @@ export default function SearchResults() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [schedules, setSchedules] = useState<any[]>([]);
-  const [rawResp, setRawResp] = useState<any>(null);
+  const [setRawResp] = useState<any>(null);
 
   const qs = new URLSearchParams(location.search);
   const origin = qs.get("origin") ?? undefined;
